@@ -13,8 +13,8 @@ export class SeederService {
   async seedCategoriesWithProducts() {
     try {
       // TODO: Eliminamos todos
-      await this.prisma.product.deleteMany();
-      await this.prisma.category.deleteMany();
+      // await this.prisma.product.deleteMany();
+      // await this.prisma.category.deleteMany();
 
       // TODO: creamos los seederes
       const desserts = this.prisma.category.create({
