@@ -34,13 +34,25 @@ export class ProductsService {
   }
 
   async findAll(pagination: PaginationDto) {
-    const { page = 1, limit = 10, orderBy = 'desc' } = pagination;
+    const {
+      page = 1,
+      limit = 10,
+      orderBy = 'desc',
+      category_id = null,
+    } = pagination;
 
-    const countProducts = await this.prisma.product.count();
+    const where: any = {};
+    if (category_id) where.categoryId = category_id;
+
+    const countProducts = await this.prisma.product.count({
+      where,
+    });
 
     const products = await this.prisma.product.findMany({
       skip: (page - 1) * limit,
       take: limit,
+
+      where,
 
       orderBy: {
         updatedAt: orderBy,

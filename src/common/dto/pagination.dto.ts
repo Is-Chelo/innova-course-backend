@@ -15,4 +15,8 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   orderBy?: 'desc' | 'asc' = 'desc';
+
+  @IsOptional()
+  @IsString()
+  category_id?: string;
 }
