@@ -18,5 +18,5 @@ export class PaginationDto {
 
   @IsOptional()
   @IsString()
-  category_id?: string;
+  category?: string;
 }

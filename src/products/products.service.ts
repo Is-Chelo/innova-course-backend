@@ -38,11 +38,11 @@ export class ProductsService {
       page = 1,
       limit = 10,
       orderBy = 'desc',
-      category_id = null,
+      category = null,
     } = pagination;
 
     const where: any = {};
-    if (category_id) where.categoryId = category_id;
+    if (category) where.categoryId = category;
 
     const countProducts = await this.prisma.product.count({
       where,
