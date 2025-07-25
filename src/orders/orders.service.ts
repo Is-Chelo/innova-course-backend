@@ -25,7 +25,7 @@ export class OrdersService {
       },
     });
     if (productIds.length !== productIdsExist.length) {
-      throw new BadRequestException('No s encontro un producto.');
+      throw new BadRequestException('No se encontro un producto.');
     }
 
     // Actualizamos el stock
