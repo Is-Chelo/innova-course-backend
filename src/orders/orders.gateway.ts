@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order-dto';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   namespace: '/orders',
@@ -18,6 +18,10 @@ export class OrdersGateway {
   @WebSocketServer()
   server: Server;
   constructor(private readonly ordersService: OrdersService) {}
+
+  async handleConnection(client: Socket) {
+    console.log('cliente conectado', client.id);
+  }
 
   @SubscribeMessage('createOrder')
   async create(@MessageBody() createOrderDto: CreateOrderDto) {
