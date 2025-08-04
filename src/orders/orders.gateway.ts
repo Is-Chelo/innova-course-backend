@@ -21,6 +21,8 @@ export class OrdersGateway {
 
   async handleConnection(client: Socket) {
     console.log('cliente conectado', client.id);
+    const orders = await this.ordersService.findAll();
+    this.server.emit('refreshOrders', { orders });
   }
 
   @SubscribeMessage('createOrder')
