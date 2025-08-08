@@ -48,6 +48,7 @@ export class OrdersService {
     });
 
     return {
+      status: true,
       message: 'Orden Registrada.',
       order: newOrder,
     };

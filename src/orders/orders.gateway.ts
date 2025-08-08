@@ -7,6 +7,7 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order-dto';
 import { Server, Socket } from 'socket.io';
+import { BadRequestException } from '@nestjs/common';
 
 @WebSocketGateway({
   namespace: '/orders',
@@ -27,8 +28,15 @@ export class OrdersGateway {
 
   @SubscribeMessage('createOrder')
   async create(@MessageBody() createOrderDto: CreateOrderDto) {
-    await this.ordersService.create(createOrderDto);
-    const orders = await this.ordersService.findAll();
-    this.server.emit('refreshOrders', { orders });
+    try {
+      await this.ordersService.create(createOrderDto);
+      const orders = await this.ordersService.findAll();
+      this.server.emit('refreshOrders', { orders });
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        return { status: 'error', message: error.message };
+      }
+      return { status: 'error', message: 'Ocurrió un error inesperado.' };
+    }
   }
 }
