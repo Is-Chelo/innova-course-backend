@@ -29,16 +29,16 @@ export class OrdersGateway {
   @SubscribeMessage('createOrder')
   async create(@MessageBody() createOrderDto: CreateOrderDto) {
     try {
-      const createOrder = await this.ordersService.create(createOrderDto);
+      await this.ordersService.create(createOrderDto);
       const orders = await this.ordersService.findAll();
 
       this.server.emit('refreshOrders', { orders });
-      return createOrder;
+      return { status: true, message: 'Orden creada' };
     } catch (error) {
       if (error instanceof BadRequestException) {
-        return { status: 'error', message: error.message };
+        return { status: false, message: error.message };
       }
-      return { status: 'error', message: 'Ocurrió un error inesperado.' };
+      return { status: false, message: 'Ocurrió un error inesperado.' };
     }
   }
 }
