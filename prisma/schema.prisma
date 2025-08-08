@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://AdminPos:admin123@cluster0.b3vkico.mongodb.net/restaurantDb?retryWrites=true&w=majority&authSource=admin"
 }
 
 model Category {
