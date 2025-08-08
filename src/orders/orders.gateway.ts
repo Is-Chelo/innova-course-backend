@@ -29,9 +29,11 @@ export class OrdersGateway {
   @SubscribeMessage('createOrder')
   async create(@MessageBody() createOrderDto: CreateOrderDto) {
     try {
-      await this.ordersService.create(createOrderDto);
+      const createOrder = await this.ordersService.create(createOrderDto);
       const orders = await this.ordersService.findAll();
+
       this.server.emit('refreshOrders', { orders });
+      return createOrder;
     } catch (error) {
       if (error instanceof BadRequestException) {
         return { status: 'error', message: error.message };
